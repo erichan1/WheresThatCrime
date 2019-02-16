@@ -74,6 +74,8 @@ def create_NN(input_size):
                   loss='mean_absolute_error',
                   metrics=['mean_absolute_error'])
 
+    return model 
+
 if __name__ == '__main__':
     # Note: This code doesn't work yet. Like at all. The functions work on their own though. 
     # v unsure how to integrate this python with webdev. 
