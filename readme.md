@@ -1,6 +1,6 @@
-WheresThatCrime: A TreeHacks 2019 Project by 
+# WheresThatCrime: A TreeHacks 2019 Project 
 
-Claudia Zhu, Daniel McCormick, Eric Han, and Sophie Wu
+##### by Claudia Zhu, Daniel McCormick, Eric Han, and Sophie Wu
 
 ## What is this program?
 
@@ -21,4 +21,4 @@ inference the severity of crime likely occuring in the area.
 By doing so, people can figure out which areas are (relatively) dangerous and which are save to adventure through.
 
 
-Tl;Dr: Predictive model for crime based off historical data
+**Tl;Dr**: Predictive model for crime based off historical data
