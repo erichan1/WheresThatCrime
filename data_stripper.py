@@ -10,8 +10,9 @@ import numpy as np
 
 def to_timestamp(day, inputTime):
     output = int(time.mktime(datetime.datetime.strptime(day, "%m/%d/%Y").timetuple())) +int(inputTime[0:1])*3600 + int(inputTime[3:4])*60
+    output = int(output/3600)
     print("New timestamp : " + str(output))
-    output = datetime.datetime.fromtimestamp(output).isoformat()
+    #output = datetime.datetime.fromtimestamp(output).isoformat()
     return str(output)
 
 def coordinates(inputCoord): 
