@@ -65,9 +65,9 @@ def retrieve_test():
 def get_data(mo, yr, rl): #rl would be really copying, if false it'll instead install 
     inp = "../SF_Crime_Heat_Map.csv"
     if (rl == True):
-        otp = "current_stat.csv"   
+        otp = "models/current_stat.csv"   
     else: 
-        otp = "current_model.csv"
+        otp = "models/current_model.csv"
     with open(inp, newline='') as csvfile:
         with open(otp, 'a') as output_file:
             reader = csv.DictReader(csvfile)
