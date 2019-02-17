@@ -12,17 +12,17 @@ import csv
 import data_stripper
 
 # for each column, subtract by min val, then divide by max val. 
-def normalize_data(x_data):
-    new_x = x_data.copy()
-    shape = new_x.shape
+def normalize_data(original, x_data):
+    new_original = original.copy()
+    shape = new_original.shape
     for i in range(shape[1]):
-        minVal = np.min(new_x[:,i])
-        new_x[:,i] -= minVal
-        maxVal = np.max(new_x[:,i])
-        print(maxVal)
+        minVal = np.min(new_original[:,i])
+        new_original[:,i] -= minVal
+        x_data[:,i] -= minVal
+        maxVal = np.max(new_original[:,i])
         if(maxVal != 0):
-            new_x[:,i] /= maxVal
-    return new_x
+            x_data[:,i] /= maxVal
+    return x_data
 
 def write_file(filename, X, pred_Y):
     '''
@@ -78,8 +78,9 @@ if __name__ == '__main__':
     test_longitude = 37.755
     test_latitude = -122.450 
 
+    X_train = data_stripper.retrieve_inputs()
     X_test = generate_X_test(int(test_dayofweek), float(test_latitude), float(test_longitude))
-    X_test_N = normalize_data(X_test)
+    X_test_N = normalize_data(X_train, X_test)
     
     modelList = []
     predictions = []
