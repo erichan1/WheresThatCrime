@@ -11,13 +11,14 @@ from sklearn.metrics import roc_auc_score
 import csv
 import data_stripper
 
-# for each column, divide all of it by its max value
+# for each column, subtract by min val, then divide by max val. 
 def normalize_data(x_data):
     new_x = x_data.copy()
     shape = new_x.shape
     for i in range(shape[1]):
-        col = new_x[:,i]
-        maxVal = np.max(col)
+        minVal = np.min(new_x[:,i])
+        new_x[:,i] -= minVal
+        maxVal = np.max(new_x[:,i])
         new_x[:,i] /= maxVal
     return new_x
 
@@ -57,28 +58,29 @@ def create_NN(input_size):
     # relu (w1x1 + w2x2 + ...) -> neuron output
     model.add(Activation('relu'))
     # randomly sets weights to zero. prevents overfitting.  
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.3))
     
+    # second layer in the model. is dense. similar parameters.  
+    model.add(Dense(40, kernel_initializer='normal'))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.3))
+
     # second layer in the model. is dense. similar parameters.  
     model.add(Dense(20, kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.3))
     
     # output layer. Has a single neuron, which will hold estimated severity value. 
     model.add(Dense(1, kernel_initializer='normal'))
     model.add(Activation('linear'))
     
-    model.compile(optimizer='adam',
+    model.compile(optimizer='rmsprop',
                   loss='mean_absolute_error',
                   metrics=['mean_absolute_error'])
 
     return model 
-
-
-
-# generate a CSV based on the array 
-def write_file()
 
 if __name__ == '__main__':
     # The pipeline should look like: 
@@ -90,15 +92,12 @@ if __name__ == '__main__':
     X_train = data_stripper.retrieve_inputs()
     Y_train = data_stripper.retrieve_outputs()
 
+    X_train_N = normalize_data(X_train)
+
     # model class created. Not fitted on data yet. This model will perform terribly. 
-    model = create_NN(X_train.shape[1])
+    model = create_NN(X_train_N.shape[1])
 
-    model.fit(X_train, Y_train)
+    model.fit(X_train_N, Y_train, epochs=10)
 
-    model.save('danger_modelv1.h5')
-
-    # given a 
-    
-
-
+    model.save('models/danger_modelv1.h5')
 

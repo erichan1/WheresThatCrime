@@ -51,18 +51,18 @@ def reint_day(day):
 
 def retrieve_inputs ():
     # This will get the first 3 rows, or the 'X' input
-    my_data = np.genfromtxt('current_stat.csv', delimiter=',', skip_header=0, usecols = (0, 1, 2), replace_space='')
+    my_data = np.genfromtxt('models/current_stat.csv', delimiter=',', skip_header=0, usecols = (0, 1, 2), replace_space='')
     #print(my_data)
     return my_data
 
 def retrieve_outputs (): 
     # This will get the 4th row, the 'Y' output
-    my_data = np.genfromtxt('current_stat.csv', delimiter=',', skip_head=0, usecols = (3), replace_space='')
+    my_data = np.genfromtxt('models/current_stat.csv', delimiter=',', skip_header=0, usecols = (3), replace_space='')
     return my_data
 
 def retrieve_test(): 
     # Loads into numpy array
-    my_data = np.genfromtxt('current_model.csv', delimiter=',', skip_head=0, replace_space='')
+    my_data = np.genfromtxt('models/current_model.csv', delimiter=',', skip_header=0, replace_space='')
     return my_data
 
 
