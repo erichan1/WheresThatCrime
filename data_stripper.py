@@ -34,7 +34,12 @@ def to_severity(severity):
         return str(1)
 
 def retrieve_inputs ():
-    my_data = genfromtxt('reduced_pattern.csv', delimiter=',', skip_header=0, replace_space='')
+    my_data = np.genfromtxt('reduced_pattern.csv', delimiter=',', skip_header=0, usecols = (0, 1, 2), replace_space='')
+    return my_data
+
+def retrieve_outputs (): 
+    my_data = np.genfromtxt('reduced_pattern.csv', delimiter=',', skip_head=0, usecols = (3), replace_space='')
+    return my_data
         
 
 if __name__ == '__main__':
