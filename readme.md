@@ -1,4 +1,4 @@
-# WheresThatCrime: A TreeHacks 2019 Project 
+# The Danger Zone: A TreeHacks 2019 Project 
 
 ##### by Claudia Zhu, Daniel McCormick, Eric Han, and Sophie Wu
 
@@ -22,3 +22,5 @@ By doing so, people can figure out which areas are (relatively) dangerous and wh
 
 
 **Tl;Dr**: Predictive model for crime based off historical data
+
+You can learn more about our project [here](https://docs.google.com/presentation/d/1XxkbqphVjHbJC1_qv0HHqiGJSVYRYX2Qyxyqj460W6s/edit?usp=sharing)
