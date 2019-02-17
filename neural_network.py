@@ -9,6 +9,7 @@ from sklearn.model_selection import KFold
 from keras.utils import to_categorical
 from sklearn.metrics import roc_auc_score
 import csv
+import data_stripper
 
 # for each column, divide all of it by its max value
 def normalize_data(x_data):
@@ -84,8 +85,8 @@ if __name__ == '__main__':
 
     # do data import stuff here. Below is commented code
 
-    ## X_train = ???
-    ## Y_train = ???
+    X_train = retrieve_inputs()
+    Y_train = retrieve_outputs()
     ## X_test = ???
 
     # model class created. Not fitted on data yet. This model will perform terribly. 
