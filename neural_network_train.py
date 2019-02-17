@@ -21,7 +21,6 @@ def normalize_data(x_data):
         new_x[:,i] /= maxVal
     return new_x
 
-
 def cross_val_NN(model, x_data, y_data):
     kf = KFold(n_splits=5)
     training_accuracy = []
@@ -40,7 +39,6 @@ def cross_val_NN(model, x_data, y_data):
     test_accuracy = np.array(test_accuracy)
 
     return (training_accuracy, test_accuracy)
-
 
 def create_NN(input_size):
     # encapsulate the model I've built so far
@@ -77,25 +75,30 @@ def create_NN(input_size):
 
     return model 
 
+
+
+# generate a CSV based on the array 
+def write_file()
+
 if __name__ == '__main__':
-    # Note: This code doesn't work yet. Like at all. The functions work on their own though. 
-    # v unsure how to integrate this python with webdev. 
     # The pipeline should look like: 
     # Location, timestamp from user = X_test -> model.predict(X_test) -> predicted severity on map
 
     # do data import stuff here. Below is commented code
-
-    X_train = retrieve_inputs()
-    Y_train = retrieve_outputs()
-    ## X_test = ???
+    # lat1: 37.77756, lo1: -122.463547
+    # lat2: 37.782783, lo2: -122.470499
+    X_train = data_stripper.retrieve_inputs()
+    Y_train = data_stripper.retrieve_outputs()
 
     # model class created. Not fitted on data yet. This model will perform terribly. 
     model = create_NN(X_train.shape[1])
 
     model.fit(X_train, Y_train)
 
+    model.save('danger_modelv1.h5')
+
     # given a 
-    predicted_severity = model.predict(X_test)
+    
 
 
 
