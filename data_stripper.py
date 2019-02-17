@@ -2,10 +2,16 @@ import csv
 import re
 import time
 import datetime
+import numpy as np
 
-def to_dt(inputTime): 
-    ret = int(inputTime[0:1])*3600 + int(inputTime[3:4])*60
-    return str(ret)
+#def to_dt(inputTime): 
+#    ret = int(inputTime[0:1])*3600 + int(inputTime[3:4])*60
+#    return str(ret)
+
+def to_timestamp(day, inputTime):
+    output = int(time.mktime(datetime.datetime.strptime(day, "%m/%d/%Y").timetuple())) +int(inputTime[0:1])*3600 + int(inputTime[3:4])*60
+    print("New timestamp : " + str(output))
+    return str(output)
 
 def coordinates(inputCoord): 
     arbitrary = inputCoord[1:-1]
@@ -27,6 +33,10 @@ def to_severity(severity):
     else:
         return str(1)
 
+def retrieve_inputs ():
+    my_data = genfromtxt('reduced_pattern.csv', delimiter=',', skip_header=0, replace_space='')
+        
+
 if __name__ == '__main__':
     fp = input("What is the input path? ")
     op = input("What is the output path? ")
@@ -34,5 +44,5 @@ if __name__ == '__main__':
         with open(op, 'a') as output_file:
             reader = csv.DictReader(csvfile)    
             for row in reader:
-                if (row['Date'].endswith("2017")):
-                    output_file.write(to_dt(row['Time']) + "," + coordinates(row['Location']) + ',' + to_severity(row['Category']) + "\n")
+                if (row['Date'] and row['Date'].endswith("2017")):
+                    output_file.write(to_timestamp(row['Date'],row['Time']) + "," + coordinates(row['Location']) + ',' + to_severity(row['Category']) + "\n")
