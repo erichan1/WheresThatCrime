@@ -58,19 +58,19 @@ def create_NN(input_size):
     # relu (w1x1 + w2x2 + ...) -> neuron output
     model.add(Activation('relu'))
     # randomly sets weights to zero. prevents overfitting.  
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.1))
     
     # second layer in the model. is dense. similar parameters.  
     model.add(Dense(40, kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.1))
 
     # second layer in the model. is dense. similar parameters.  
     model.add(Dense(20, kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.1))
     
     # output layer. Has a single neuron, which will hold estimated severity value. 
     model.add(Dense(1, kernel_initializer='normal'))
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     # model class created. Not fitted on data yet. This model will perform terribly. 
     model = create_NN(X_train_N.shape[1])
 
-    model.fit(X_train_N, Y_train, epochs=10)
+    model.fit(X_train_N, Y_train, epochs=30)
 
     model.save('models/danger_modelv1.h5')
 
