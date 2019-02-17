@@ -90,8 +90,8 @@ if __name__ == '__main__':
     predicted_severity = model.predict(X_test_N)
     predicted_severity = predicted_severity.reshape(-1)
     predicted_severity = adjustData(predicted_severity)
-    predicted_severity = addNoise(predicted_severity, 0.5)
+    predicted_severity = addNoise(predicted_severity, 1)
 
-    write_file('models/danger_predictionsv1.csv', X_test, predicted_severity)
+    write_file('models/danger_predictionsv2.csv', X_test, predicted_severity)
 
     
