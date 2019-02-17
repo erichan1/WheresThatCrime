@@ -58,19 +58,13 @@ def create_NN(input_size):
     # relu (w1x1 + w2x2 + ...) -> neuron output
     model.add(Activation('relu'))
     # randomly sets weights to zero. prevents overfitting.  
-    model.add(Dropout(0.3))
-    
-    # second layer in the model. is dense. similar parameters.  
-    model.add(Dense(40, kernel_initializer='normal'))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.5))
 
     # second layer in the model. is dense. similar parameters.  
     model.add(Dense(20, kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.5))
     
     # output layer. Has a single neuron, which will hold estimated severity value. 
     model.add(Dense(1, kernel_initializer='normal'))
@@ -81,6 +75,16 @@ def create_NN(input_size):
                   metrics=['mean_absolute_error'])
 
     return model 
+
+# create and train NN ensemble
+def create_train_NN_ensemble(X_train, Y_train, n_estimators):
+    input_size = X_train.shape[1]
+    modelList = []
+    for i in range(n_estimators):
+        this_model = create_NN(input_size)
+        this_model.fit(X_train, Y_train, epochs=10)
+        modelList.append(this_model)
+    return modelList
 
 if __name__ == '__main__':
     # The pipeline should look like: 
@@ -94,10 +98,9 @@ if __name__ == '__main__':
 
     X_train_N = normalize_data(X_train)
 
-    # model class created. Not fitted on data yet. This model will perform terribly. 
-    model = create_NN(X_train_N.shape[1])
+    # model class created. Not fitted on data yetX_train_n. This model will perform terribly. 
+    modelList = create_train_NN_ensemble(X_train_N, Y_train, 10)
 
-    model.fit(X_train_N, Y_train, epochs=10)
-
-    model.save('models/danger_modelv1.h5')
+    for i, model in enumerate(modelList): 
+        model.save('models/NN_ensemble/danger_model{}.h5'.format(i))
 

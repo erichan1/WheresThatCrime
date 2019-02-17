@@ -60,7 +60,7 @@ def adjustData(pred_Y):
     min_val = np.min(pred_Y)
     max_val = np.max(pred_Y)
     diff = max_val - min_val
-    pred_Y = (pred_Y - min_val) / diff * 2 + 2
+    pred_Y = (pred_Y - min_val) / diff * 1.5 + 1.5
     return pred_Y 
 
 # add a bit of noise to the data
@@ -68,8 +68,6 @@ def addNoise(pred_Y, maxOffset):
     for val in pred_Y:
         val += np.random.uniform(-1 * maxOffset, maxOffset) 
     return pred_Y
-
-
 
 if __name__ == '__main__':
     # test_dayofweek = input("What day of the week? \n")
@@ -80,17 +78,21 @@ if __name__ == '__main__':
     test_longitude = 37.755
     test_latitude = -122.450 
 
-
-
     X_test = generate_X_test(int(test_dayofweek), float(test_latitude), float(test_longitude))
     X_test_N = normalize_data(X_test)
     
-    model = keras.models.load_model('models/danger_modelv1.h5')
+    modelList = []
+    predictions = []
+    for i in range(10): 
+        this_model = keras.models.load_model('models/NN_ensemble/danger_model{}.h5'.format(i))
+        modelList.append(this_model)
+        this_pred = this_model.predict(X_test_N)
+        predictions.append(this_pred)
 
-    predicted_severity = model.predict(X_test_N)
+    predicted_severity = np.mean(np.array(predictions), axis=0)
     predicted_severity = predicted_severity.reshape(-1)
     predicted_severity = adjustData(predicted_severity)
-    predicted_severity = addNoise(predicted_severity, 5)
+    predicted_severity = addNoise(predicted_severity, 1)
 
     write_file('models/danger_predictionsv2.csv', X_test, predicted_severity)
 
