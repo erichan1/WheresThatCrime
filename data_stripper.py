@@ -11,6 +11,7 @@ import numpy as np
 def to_timestamp(day, inputTime):
     output = int(time.mktime(datetime.datetime.strptime(day, "%m/%d/%Y").timetuple())) +int(inputTime[0:1])*3600 + int(inputTime[3:4])*60
     print("New timestamp : " + str(output))
+    output = datetime.datetime.fromtimestamp(output).isoformat()
     return str(output)
 
 def coordinates(inputCoord): 
@@ -35,6 +36,7 @@ def to_severity(severity):
 
 def retrieve_inputs ():
     my_data = np.genfromtxt('reduced_pattern.csv', delimiter=',', skip_header=0, usecols = (0, 1, 2), replace_space='')
+    print(my_data)
     return my_data
 
 def retrieve_outputs (): 
