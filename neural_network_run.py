@@ -43,10 +43,10 @@ def write_file(filename, X, pred_Y):
 # input is (x, y). 
 # generates a square of (x,y) within 0.5 lat degree of the given lat
 def generate_X_test(dayofweek, latitude, longitude):
-    numAxisPoints = 21 # the number of points on X and Y. total # points is this squared. 
+    numAxisPoints = 101 # the number of points on X and Y. total # points is this squared. 
     T = np.array([dayofweek] * numAxisPoints**2)
-    X = np.linspace(longitude - 0.5, longitude + 0.5, numAxisPoints)
-    Y = np.linspace(latitude - 0.5, latitude + 0.5, numAxisPoints)
+    X = np.linspace(longitude - 0.044, longitude + 0.034, numAxisPoints)
+    Y = np.linspace(latitude - 0.044, latitude + 0.034, numAxisPoints)
     X_test = np.zeros((numAxisPoints**2, 3))
     X_test[:,0] = dayofweek
 
@@ -63,6 +63,12 @@ def adjustData(pred_Y):
     pred_Y = (pred_Y - min_val) / diff * 2 + 2
     return pred_Y 
 
+# add a bit of noise to the data
+def addNoise(pred_Y, maxOffset):
+    for val in pred_Y:
+        val += np.random.uniform(-1 * maxOffset, maxOffset) 
+    return pred_Y
+
 
 
 if __name__ == '__main__':
@@ -71,8 +77,10 @@ if __name__ == '__main__':
     # test_latitude = input("What longitude (x)? \n")
 
     test_dayofweek = 4
-    test_longitude = 37.771539
-    test_latitude = -122.417736
+    test_longitude = 37.755
+    test_latitude = -122.450 
+
+
 
     X_test = generate_X_test(int(test_dayofweek), float(test_latitude), float(test_longitude))
     X_test_N = normalize_data(X_test)
@@ -82,6 +90,7 @@ if __name__ == '__main__':
     predicted_severity = model.predict(X_test_N)
     predicted_severity = predicted_severity.reshape(-1)
     predicted_severity = adjustData(predicted_severity)
+    predicted_severity = addNoise(predicted_severity, 0.5)
 
     write_file('models/danger_predictionsv1.csv', X_test, predicted_severity)
 

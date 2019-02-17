@@ -61,16 +61,10 @@ def create_NN(input_size):
     model.add(Dropout(0.3))
     
     # second layer in the model. is dense. similar parameters.  
-    model.add(Dense(40, kernel_initializer='normal'))
+    model.add(Dense(30, kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.3))
-
-    # second layer in the model. is dense. similar parameters.  
-    model.add(Dense(20, kernel_initializer='normal'))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.4))
     
     # output layer. Has a single neuron, which will hold estimated severity value. 
     model.add(Dense(1, kernel_initializer='normal'))
